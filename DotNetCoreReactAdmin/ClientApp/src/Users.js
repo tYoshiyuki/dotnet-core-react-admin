@@ -10,7 +10,7 @@ const UserFilter = (props) => (
 );
 
 export const UserList = props => (
-    <List {...props} filters={<UserFilter />}>
+    <List {...props} filters={<UserFilter />} sort={{ field: 'id', order: 'ASC' }}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
