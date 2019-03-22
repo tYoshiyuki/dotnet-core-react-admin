@@ -43,6 +43,7 @@ namespace DotNetCoreReactAdmin.Controllers
                     }
                 }
             }
+            var count = user.Count();
 
             if (!string.IsNullOrEmpty(sort))
             {
@@ -63,7 +64,7 @@ namespace DotNetCoreReactAdmin.Controllers
             }
 
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Range");
-            Response.Headers.Add("Content-Range", $"user {from}-{to}/{user.Count()}");
+            Response.Headers.Add("Content-Range", $"user {from}-{to}/{count}");
             return await user.ToListAsync();
         }
 
@@ -83,14 +84,14 @@ namespace DotNetCoreReactAdmin.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User users)
+        public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != users.Id)
+            if (id != user.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(users).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -108,20 +109,19 @@ namespace DotNetCoreReactAdmin.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(await _context.User.FindAsync(user.Id));
         }
 
-        // POST: api/Users
+        // POST: api/User
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User users)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.User.Add(users);
+            _context.User.Add(user);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsers", new { id = users.Id }, users);
+            return Ok(await _context.User.FindAsync(user.Id));
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/User/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
@@ -134,7 +134,7 @@ namespace DotNetCoreReactAdmin.Controllers
             _context.User.Remove(users);
             await _context.SaveChangesAsync();
 
-            return users;
+            return Ok(users);
         }
 
         private bool UsersExists(int id)

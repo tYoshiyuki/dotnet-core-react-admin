@@ -65,7 +65,7 @@ namespace DotNetCoreReactAdmin
 
             if (env.IsDevelopment())
             {
-                app.UseCors("DevelopmentPolicy");
+                app.UseCors(DevelopmentPolicy);
             }
 
             app.UseMvc(routes =>
