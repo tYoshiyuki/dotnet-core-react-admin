@@ -7,6 +7,9 @@ React Admin と ASP.NET Core の Web API のサンプル
 - Dynamic LINQ
 - React Admin
 
+## Demo
+[Demo Site](https://dotnet-core-react-admin.azurewebsites.net/)
+
 ## Note
 - .NET CoreのReactテンプレートをReact Admin用にカスタマイズしています。
 - サーバサイドのAPIは、React Adminの基本機能である検索、ページング、ソートに対応しています。
