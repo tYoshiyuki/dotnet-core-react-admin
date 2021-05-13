@@ -4,12 +4,12 @@
   "private": true,
   "dependencies": {
     "prop-types": "^15.7.2",
-    "ra-data-json-server": "^2.8.0",
-    "ra-data-simple-rest": "^2.8.0",
-    "react": "^16.8.4",
-    "react-admin": "^2.8.2",
-    "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "ra-data-json-server": "^3.15.1",
+    "ra-data-simple-rest": "^3.13.4",
+    "react": "^17.0.2",
+    "react-admin": "^3.15.1",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
