@@ -8,7 +8,7 @@ namespace DotNetCoreReactAdmin.Models
 {
     public class DotNetCoreReactAdminContext : DbContext
     {
-        public DotNetCoreReactAdminContext (DbContextOptions<DotNetCoreReactAdminContext> options)
+        public DotNetCoreReactAdminContext(DbContextOptions<DotNetCoreReactAdminContext> options)
             : base(options)
         {
         }

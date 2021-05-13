@@ -2,7 +2,7 @@
 React Admin と ASP.NET Core の Web API のサンプル
 
 ## Feature
-- .NET Core 2.2
+- .NET5
 - ASP.NET Core
 - Dynamic LINQ
 - React Admin

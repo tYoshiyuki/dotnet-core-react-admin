@@ -1,11 +1,11 @@
+﻿using System;
 using DotNetCoreReactAdmin.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using System;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetCoreReactAdmin
 {
