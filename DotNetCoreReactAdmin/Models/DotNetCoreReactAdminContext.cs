@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DotNetCoreReactAdmin.Models
 {
@@ -13,6 +9,6 @@ namespace DotNetCoreReactAdmin.Models
         {
         }
 
-        public DbSet<DotNetCoreReactAdmin.Models.User> User { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

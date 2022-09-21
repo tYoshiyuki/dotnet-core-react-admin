@@ -17,12 +17,12 @@ namespace DotNetCoreReactAdmin.Controllers
         protected readonly DotNetCoreReactAdminContext _context;
         protected DbSet<T> _table;
 
-        public ReactAdminController(DotNetCoreReactAdminContext context)
+        protected ReactAdminController(DotNetCoreReactAdminContext context)
         {
             _context = context;
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult<T>> Delete(int id)
         {
             var entity = await _table.FindAsync(id);
@@ -83,7 +83,7 @@ namespace DotNetCoreReactAdmin.Controllers
             return await entityQuery.ToListAsync();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<T>> Get(int id)
         {
             var entity = await _table.FindAsync(id);
@@ -105,7 +105,7 @@ namespace DotNetCoreReactAdmin.Controllers
             return Ok(await _table.FindAsync(id));
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, T entity)
         {
             var entityId = (int)typeof(T).GetProperty("Id").GetValue(entity);

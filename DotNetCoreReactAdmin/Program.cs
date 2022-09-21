@@ -1,6 +1,5 @@
 ﻿using System;
 using DotNetCoreReactAdmin.Models;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
