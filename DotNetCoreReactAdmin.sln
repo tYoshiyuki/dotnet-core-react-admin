@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreReactAdmin", "DotNetCoreReactAdmin\DotNetCoreReactAdmin.csproj", "{54991070-5E1E-41B8-B061-6F043B3DC494}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreReactAdmin", "DotNetCoreReactAdmin\DotNetCoreReactAdmin.csproj", "{54991070-5E1E-41B8-B061-6F043B3DC494}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreReactAdmin.Test", "DotNetCoreReactAdmin.Test\DotNetCoreReactAdmin.Test.csproj", "{9E0A3E1D-E7FA-47A8-A692-BA66A6EDB3BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{54991070-5E1E-41B8-B061-6F043B3DC494}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54991070-5E1E-41B8-B061-6F043B3DC494}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54991070-5E1E-41B8-B061-6F043B3DC494}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E0A3E1D-E7FA-47A8-A692-BA66A6EDB3BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E0A3E1D-E7FA-47A8-A692-BA66A6EDB3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E0A3E1D-E7FA-47A8-A692-BA66A6EDB3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E0A3E1D-E7FA-47A8-A692-BA66A6EDB3BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

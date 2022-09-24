@@ -44,7 +44,7 @@ namespace DotNetCoreReactAdmin.Controllers
         /// <remarks>
         /// <para>Update a record に相当します。</para>
         /// </remarks>
-        Task<IActionResult> Put(int id, T entity);
+        Task<ActionResult<T>> Put(int id, T entity);
 
         /// <summary>
         /// 対象となるモデルを登録します。

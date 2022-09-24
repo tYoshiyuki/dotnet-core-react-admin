@@ -117,20 +117,16 @@ namespace DotNetCoreReactAdmin.Controllers
         [HttpPost]
         public async Task<ActionResult<T>> Post(T entity)
         {
-            var id = (int?)typeof(T).GetProperty("Id")?.GetValue(entity);
-            if (!id.HasValue)
-            {
-                return BadRequest();
-            }
-
-            _table.Add(entity);
+            var entry = _table.Add(entity);
             await _context.SaveChangesAsync();
+
+            var id = (int?)typeof(T).GetProperty("Id")?.GetValue(entry.Entity);
             return Ok(await _table.FindAsync(id));
         }
 
         /// <inheritdoc />
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, T entity)
+        public async Task<ActionResult<T>> Put(int id, T entity)
         {
             var entityId = (int?)typeof(T).GetProperty("Id")?.GetValue(entity);
             if (!entityId.HasValue || id != entityId)
