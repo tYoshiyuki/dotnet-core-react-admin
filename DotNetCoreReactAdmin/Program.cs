@@ -18,6 +18,11 @@ namespace DotNetCoreReactAdmin
                 try
                 {
                     var context = serviceScope.ServiceProvider.GetService<DotNetCoreReactAdminContext>();
+                    if (context == null)
+                    {
+                        throw new Exception("DB Context not found.");
+                    }
+
                     context.Database.Migrate();
                     DbInitializer.Initialize(context);
                 }
