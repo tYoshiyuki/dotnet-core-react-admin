@@ -16,9 +16,9 @@ namespace DotNetCoreReactAdmin.Controllers
         /// <summary>
         /// 対象となるモデルのリストを取得します。
         /// </summary>
-        /// <param name="filter">検索条件</param>
-        /// <param name="range">取得範囲条件 (ページング)</param>
-        /// <param name="sort">ソート条件</param>
+        /// <param name="filter">検索条件, JSONオブジェクト形式 例) {"Name":"Taro"}</param>
+        /// <param name="range">取得範囲条件 (ページング), JSON配列形式 例) [0,9]</param>
+        /// <param name="sort">ソート条件, JSON配列形式 例) ["id","ASC"]</param>
         /// <returns>モデルのリスト</returns>
         /// <remarks>
         /// <para>Get list に相当します。</para>
