@@ -10,6 +10,10 @@ using Newtonsoft.Json.Linq;
 
 namespace DotNetCoreReactAdmin.Controllers
 {
+    /// <summary>
+    /// <see cref="IReactAdminController{T}"/> の抽象実装クラスです。
+    /// </summary>
+    /// <typeparam name="T">対象となるモデルの型</typeparam>
     [Route("api/[controller]")]
     [ApiController]
     public abstract class ReactAdminController<T> : ControllerBase, IReactAdminController<T> where T : class, new()
@@ -17,11 +21,16 @@ namespace DotNetCoreReactAdmin.Controllers
         protected readonly DotNetCoreReactAdminContext _context;
         protected DbSet<T> _table;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="context"><see cref="DotNetCoreReactAdminContext"/></param>
         protected ReactAdminController(DotNetCoreReactAdminContext context)
         {
             _context = context;
         }
 
+        /// <inheritdoc />
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<T>> Delete(int id)
         {
@@ -37,18 +46,22 @@ namespace DotNetCoreReactAdmin.Controllers
             return Ok(entity);
         }
 
+        /// <inheritdoc />
         [HttpGet]
         public async Task<ActionResult<IEnumerable<T>>> Get(string filter = "", string range = "", string sort = "")
         {
             var entityQuery = _table.AsQueryable();
 
+            // NOTE
+            // 検索条件を元に対象データの絞り込みを行います。
+            // 検索対象項目が string型 の場合は、部分一致による検索を行います。
             if (!string.IsNullOrEmpty(filter))
             {
                 var filterVal = (JObject)JsonConvert.DeserializeObject(filter);
                 var t = new T();
                 foreach (var f in filterVal)
                 {
-                    if (t.GetType().GetProperty(f.Key).PropertyType == typeof(string))
+                    if (t.GetType().GetProperty(f.Key)?.PropertyType == typeof(string))
                     {
                         entityQuery = entityQuery.Where($"{f.Key}.Contains(@0)", f.Value.ToString());
                     }
@@ -60,6 +73,7 @@ namespace DotNetCoreReactAdmin.Controllers
             }
             var count = entityQuery.Count();
 
+            // NOTE ソート条件を元に対象データのソートを行います。
             if (!string.IsNullOrEmpty(sort))
             {
                 var sortVal = JsonConvert.DeserializeObject<List<string>>(sort);
@@ -68,6 +82,7 @@ namespace DotNetCoreReactAdmin.Controllers
                 entityQuery = entityQuery.OrderBy($"{condition} {order}");
             }
 
+            // NOTE 取得範囲条件を元にデータの取得を行います。
             var from = 0;
             var to = 0;
             if (!string.IsNullOrEmpty(range))
@@ -78,11 +93,13 @@ namespace DotNetCoreReactAdmin.Controllers
                 entityQuery = entityQuery.Skip(from).Take(to - from + 1);
             }
 
+            // NOTE React Admin の仕様に従い、レスポンスヘッダを設定します。
             Response.Headers.Add("Access-Control-Expose-Headers", "Content-Range");
             Response.Headers.Add("Content-Range", $"{typeof(T).Name.ToLower()} {from}-{to}/{count}");
             return await entityQuery.ToListAsync();
         }
 
+        /// <inheritdoc />
         [HttpGet("{id:int}")]
         public async Task<ActionResult<T>> Get(int id)
         {
@@ -96,20 +113,27 @@ namespace DotNetCoreReactAdmin.Controllers
             return entity;
         }
 
+        /// <inheritdoc />
         [HttpPost]
         public async Task<ActionResult<T>> Post(T entity)
         {
+            var id = (int?)typeof(T).GetProperty("Id")?.GetValue(entity);
+            if (!id.HasValue)
+            {
+                return BadRequest();
+            }
+
             _table.Add(entity);
             await _context.SaveChangesAsync();
-            var id = (int)typeof(T).GetProperty("Id").GetValue(entity);
             return Ok(await _table.FindAsync(id));
         }
 
+        /// <inheritdoc />
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, T entity)
         {
-            var entityId = (int)typeof(T).GetProperty("Id").GetValue(entity);
-            if (id != entityId)
+            var entityId = (int?)typeof(T).GetProperty("Id")?.GetValue(entity);
+            if (!entityId.HasValue || id != entityId)
             {
                 return BadRequest();
             }
@@ -135,10 +159,14 @@ namespace DotNetCoreReactAdmin.Controllers
             return Ok(await _table.FindAsync(entityId));
         }
 
+        /// <summary>
+        /// 対象モデルの存在をチェックします。
+        /// </summary>
+        /// <param name="id">Id値</param>
+        /// <returns>存在する場合: true</returns>
         private bool EntityExists(int id)
         {
             return _table.Any(e => (int)typeof(T).GetProperty("Id").GetValue(e) == id);
         }
-
     }
 }
