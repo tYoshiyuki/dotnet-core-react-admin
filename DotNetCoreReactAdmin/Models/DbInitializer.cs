@@ -2,8 +2,15 @@
 
 namespace DotNetCoreReactAdmin.Models
 {
+    /// <summary>
+    /// DBの初期化を行うクラスです。
+    /// </summary>
     public class DbInitializer
     {
+        /// <summary>
+        /// DBの初期データを投入します。
+        /// </summary>
+        /// <param name="context"><see cref="DotNetCoreReactAdminContext"/></param>
         public static void Initialize(DotNetCoreReactAdminContext context)
         {
             if (context.User.Any())
