@@ -80,6 +80,7 @@ namespace DotNetCoreReactAdmin
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
+                spa.Options.DevServerPort = 5173;
 
                 if (env.IsDevelopment())
                 {
