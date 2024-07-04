@@ -2,7 +2,7 @@
 React Admin と ASP.NET Core の Web API のサンプル
 
 ## Feature
-- .NET6
+- .NET8
 - ASP.NET Core
 - Dynamic LINQ
 - React Admin

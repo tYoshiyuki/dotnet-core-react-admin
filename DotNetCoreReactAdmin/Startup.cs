@@ -9,15 +9,10 @@ using Microsoft.Extensions.Hosting;
 
 namespace DotNetCoreReactAdmin
 {
-    public class Startup
+    public class Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-        private readonly string DevelopmentPolicy = "_DevelopmentPolicy";
+        public IConfiguration Configuration { get; } = configuration;
+        private readonly string developmentPolicy = "_DevelopmentPolicy";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,7 +30,7 @@ namespace DotNetCoreReactAdmin
 
             services.AddCors(options =>
             {
-                options.AddPolicy(DevelopmentPolicy,
+                options.AddPolicy(developmentPolicy,
                 builder =>
                 {
                     builder.WithOrigins("http://localhost:3000")
@@ -65,7 +60,7 @@ namespace DotNetCoreReactAdmin
 
             if (env.IsDevelopment())
             {
-                app.UseCors(DevelopmentPolicy);
+                app.UseCors(developmentPolicy);
             }
 
             app.UseRouting();
