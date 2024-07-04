@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using DotNetCoreReactAdmin.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -14,21 +15,13 @@ namespace DotNetCoreReactAdmin.Controllers
     /// <see cref="IReactAdminController{T}"/> の抽象実装クラスです。
     /// </summary>
     /// <typeparam name="T">対象となるモデルの型</typeparam>
+    /// <param name="context"><see cref="DotNetCoreReactAdminContext"/></param>
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class ReactAdminController<T> : ControllerBase, IReactAdminController<T> where T : class, new()
+    public abstract class ReactAdminController<T>(DotNetCoreReactAdminContext context) : ControllerBase, IReactAdminController<T> where T : class, new()
     {
-        protected readonly DotNetCoreReactAdminContext _context;
+        protected readonly DotNetCoreReactAdminContext _context = context;
         protected DbSet<T> _table;
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="context"><see cref="DotNetCoreReactAdminContext"/></param>
-        protected ReactAdminController(DotNetCoreReactAdminContext context)
-        {
-            _context = context;
-        }
 
         /// <inheritdoc />
         [HttpDelete("{id:int}")]
@@ -94,8 +87,8 @@ namespace DotNetCoreReactAdmin.Controllers
             }
 
             // NOTE React Admin の仕様に従い、レスポンスヘッダを設定します。
-            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Range");
-            Response.Headers.Add("Content-Range", $"{typeof(T).Name.ToLower()} {from}-{to}/{count}");
+            Response.Headers.Append("Access-Control-Expose-Headers", "Content-Range");
+            Response.Headers.Append("Content-Range", $"{typeof(T).Name.ToLower()} {from}-{to}/{count}");
             return await entityQuery.ToListAsync();
         }
 
